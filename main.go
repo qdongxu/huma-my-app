@@ -5,9 +5,20 @@ import (
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/danielgtaylor/huma/v2/adapters/humagin"
 	"github.com/gin-gonic/gin"
-	"my-app/module/submodule"
 	"net/http"
 )
+
+type BizData struct {
+	Greeting string
+	Name     string
+}
+
+func LegacyHandler(ctx context.Context, name *string) (*BizData, error) {
+	return &BizData{
+		Greeting: "Hello world ",
+		Name:     *name,
+	}, nil
+}
 
 // GreetingInput represents the greeting operation request.
 type GreetingInput struct {
@@ -58,7 +69,7 @@ func main() {
 		Method:      http.MethodGet,
 		Path:        "/greeting/{name}",
 	},
-		HumaHandlerAdaptor(ParseParam, submodule.LegacyHandler),
+		HumaHandlerAdaptor(ParseParam, LegacyHandler),
 	)
 
 	// Start the server!
