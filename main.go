@@ -6,6 +6,7 @@ import (
 	"github.com/danielgtaylor/huma/v2/adapters/humagin"
 	"github.com/gin-gonic/gin"
 	"my-app/module/submodule"
+	submodulex "my-app/module/submodule2"
 	"net/http"
 )
 
@@ -58,7 +59,25 @@ func main() {
 		Method:      http.MethodGet,
 		Path:        "/greeting/{name}",
 	},
-		HumaHandlerAdaptor(ParseParam, submodule.LegacyHandler),
+		HumaHandlerAdaptor(ParseParam, submodule.BizHandler),
+	)
+
+	huma.Register(api, huma.Operation{
+		OperationID: "get-order",
+		Summary:     "Get a greeting",
+		Method:      http.MethodGet,
+		Path:        "/orders/{name}",
+	},
+		HumaHandlerAdaptor(ParseParam, submodule.OrderHandler),
+	)
+
+	huma.Register(api, huma.Operation{
+		OperationID: "get-order2",
+		Summary:     "Get a greeting",
+		Method:      http.MethodGet,
+		Path:        "/v2/orders/{name}",
+	},
+		HumaHandlerAdaptor(ParseParam, submodulex.OrderHandler),
 	)
 
 	// Start the server!

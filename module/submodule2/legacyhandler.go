@@ -1,4 +1,4 @@
-package submodule
+package submodulex
 
 import "context"
 
@@ -23,6 +23,7 @@ func BizHandler(ctx context.Context, name *string) (*Generic[BizData], error) {
 type OrderData struct {
 	Count int
 	Price int
+	Me    string
 }
 
 func OrderHandler(ctx context.Context, name *string) (*Generic[OrderData], error) {
